@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'barrage/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "barrage"
+  spec.name          = "barrage_bench"
   spec.summary       = 'A benchmarking tool to make benchmarking and collecting statistics from the run and system hardware simple'
   spec.description   = 'see summary'
   spec.version       = Barrage::VERSION
