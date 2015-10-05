@@ -17,12 +17,12 @@ class Dstat
     count = 0
     CSV.foreach(file) do |row|
 
-      if start_parsing == true then
+      if start_parsing
         time.push(count - 7)
         values.push(row[column])
       end
 
-      if start_parsing == false && count == 7
+      if !start_parsing && count == 7
         start_parsing = true
       end
 
