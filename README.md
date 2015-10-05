@@ -1,4 +1,4 @@
-<img src="barrage.jpg" alt="Barrage" width="150" height="150">
+<img src="barrage.jpg" alt="Barrage" width="140" height="140">
 # Barrage
 Barrage is a benchmarking tool and has the goal to fill the following roles.
 
