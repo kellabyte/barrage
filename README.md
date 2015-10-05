@@ -16,3 +16,9 @@ Barrage only runs on operating systems with `dstat` and won't work on Mac OSX ye
 You need some packages on Linux installed to run Barrage. For example on Ubuntu you will need the following packages.
 
 `sudo apt-get install dstat gnuplot xclip`
+
+# Installing
+`gem install barrage_bench`
+
+# Running
+`barrage capture` and CTRL-C will exit the `dstat` capturing and plot the graphs and post them to imgur and report a link to the image. 
