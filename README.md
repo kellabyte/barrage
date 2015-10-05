@@ -21,4 +21,4 @@ You need some packages on Linux installed to run Barrage. For example on Ubuntu 
 `gem install barrage_bench`
 
 # Running
-`barrage capture` and CTRL-C will exit the `dstat` capturing and plot the graphs and post them to imgur and report a link to the image. 
+`barrage capture` and `CTRL-C` will exit the dstat capturing and plot the graphs and post them to imgur and report a link to the image. 
