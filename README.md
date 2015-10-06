@@ -15,8 +15,8 @@ Barrage only runs on operating systems with `dstat` and won't work on Mac OSX ye
 
 You need some packages and gems on Linux installed to run Barrage. For example on Ubuntu you will need the following packages.
 
-`sudo apt-get install dstat gnuplot xclip`
-`gem install bundler`
+```sudo apt-get install dstat gnuplot xclip
+gem install bundler```
 
 # Installing
 `gem install barrage_bench`
