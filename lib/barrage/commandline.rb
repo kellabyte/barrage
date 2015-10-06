@@ -43,10 +43,12 @@ class Commandline < Thor
   end
 
   def self.template(plot)
+    plot.multiplot "layout 4,2"
     plot.key "font 'Verdana,24'"
     plot.object '1 rectangle from screen 0,0 to screen 3,3 fillcolor rgb"black" behind'
     plot.object '1 rect from graph 0, 0, 0 to graph 1, 1, 0'
     plot.object '1 behind lw 1.0 fc rgb "#000000" fillstyle solid 1.00 border lt -1'
+
     plot.key 'textcolor rgb "#FFFFFF"'
     plot.key 'inside top center horizontal Right noreverse enhanced autotitles nobox'
     plot.key 'samplen 1 spacing 1.0 font "Arial,16"'
@@ -59,34 +61,35 @@ class Commandline < Thor
       Gnuplot::Plot.new(gp) do |plot|
         plot.term "png truecolor enhanced fontscale 1.0 size 1920, 1080 font 'Arial,16'"
         plot.output @@image_file
-        plot.multiplot "layout 4,2"
-        plot.origin "0.0,0.5"
-        plot.size "0.5,0.5"
-
         self.template(plot)
+
+        plot.origin '0.0,0.5'
+        plot.size '0.5,0.5'
+
         CPU.perform(filename, plot)
       end
 
       Gnuplot::Plot.new(gp) do |plot|
-        plot.origin "0.5,0.5"
-        plot.size "0.5,0.5"
-
         self.template(plot)
+
+        plot.origin '0.5,0.5'
+        plot.size '0.5,0.5'
+
         Memory.perform(filename, plot)
       end
 
       Gnuplot::Plot.new(gp) do |plot|
+        self.template(plot)
+
         plot.origin "0.0,0.0"
         plot.size "0.5,0.5"
 
-        self.template(plot)
         Network.perform(filename, plot)
       end
     end
   end
 
   def self.upload
-    puts "Uploading to imgur..."
     output = `imgurr upload #{@@image_file}`
     puts "#{output.split(" ")[1]}"
   end
