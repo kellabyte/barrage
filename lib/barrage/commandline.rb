@@ -44,14 +44,11 @@ class Commandline < Thor
 
   def self.template(plot)
     plot.multiplot "layout 4,2"
-    plot.key "font 'Verdana,24'"
     plot.object '1 rectangle from screen 0,0 to screen 3,3 fillcolor rgb"black" behind'
     plot.object '1 rect from graph 0, 0, 0 to graph 1, 1, 0'
     plot.object '1 behind lw 1.0 fc rgb "#000000" fillstyle solid 1.00 border lt -1'
-
-    plot.key 'textcolor rgb "#FFFFFF"'
-    plot.key 'inside top center horizontal Right noreverse enhanced autotitles nobox'
-    plot.key 'samplen 1 spacing 1.0 font "Arial,16"'
+    plot.key 'inside top left vertical Right noreverse enhanced autotitles nobox'
+    plot.key 'samplen 1 spacing 1.0 font "Verdana,16" textcolor rgb "#FFFFFF"'
     plot.style "fill transparent solid 0.2"
     plot.grid
   end
@@ -59,7 +56,7 @@ class Commandline < Thor
   def self.plot(filename)
     Gnuplot.open do |gp|
       Gnuplot::Plot.new(gp) do |plot|
-        plot.term "png truecolor enhanced fontscale 1.0 size 1920, 1080 font 'Arial,16'"
+        plot.term "png truecolor enhanced fontscale 1.0 size 1920, 1080 font 'Verdana,16'"
         plot.output @@image_file
         self.template(plot)
 
