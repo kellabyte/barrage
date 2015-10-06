@@ -21,7 +21,6 @@ module Barrage
 
     def self.kill(pid)
       if pid > 0
-        puts "#{pid}"
         Process.kill "QUIT", pid
       end
 
