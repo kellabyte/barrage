@@ -13,9 +13,10 @@ My initial thought is Barrage will have an agent and orchestrator mode. Once the
 # Prerequisites
 Barrage only runs on operating systems with `dstat` and won't work on Mac OSX yet. In the future roles not collecting system metrics won't have this restriction.
 
-You need some packages on Linux installed to run Barrage. For example on Ubuntu you will need the following packages.
+You need some packages and gems on Linux installed to run Barrage. For example on Ubuntu you will need the following packages.
 
 `sudo apt-get install dstat gnuplot xclip`
+`gem install bundler`
 
 # Installing
 `gem install barrage_bench`
