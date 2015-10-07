@@ -24,7 +24,7 @@ class Commandline < Thor
     @@image_file
   end
 
-  desc "capture", "Capture dstat output"
+  desc "capture", "Capture and plot dstat output"
   def capture
     @@unique_id = "#{Time.now.getutc.to_i}"
     @@dstat_file = "output/stats_#{@@unique_id}.csv"
@@ -66,3 +66,4 @@ class Commandline < Thor
     exit(0)
   end
 end
+
