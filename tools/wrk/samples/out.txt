@@ -1,0 +1,13 @@
+Running 2m test @ http://192.168.0.101:8000
+  8 threads and 32 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.21ms    1.10ms  24.49ms   60.88%
+    Req/Sec   126.92k    31.99k  214.07k    65.20%
+  Latency Distribution
+     50%    1.61ms
+     75%    5.61ms
+     90%    0.00us
+     99%    0.00us
+  121270683 requests in 2.00m, 17.84GB read
+Requests/sec: 1010014.80
+Transfer/sec:    152.19MB
