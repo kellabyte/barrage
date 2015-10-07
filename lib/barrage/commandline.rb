@@ -2,6 +2,7 @@ require "thor"
 require "imgurr"
 require_relative "dstat"
 require_relative "gnuplot_plotter"
+require_relative "imgur"
 
 class Commandline < Thor
   @@dstat_pid = 0
@@ -30,13 +31,38 @@ class Commandline < Thor
     @@image_file = "output/results_#{@@unique_id}.png"
 
     @@dstat_pid = Dstat.run(@@dstat_file)
+    puts "\nPress CTRL-C to exit\n\n"
+    trap("INT") { Commandline.kill(@@dstat_pid) }
+    $stdin.read
+  end
+
+  desc "plot [FILE]", "Plot graphs from dstat [FILE]"
+  def plot(file)
+    @@dstat_file = file
+    @@image_file = "#{File.dirname(file)}/#{File.basename(file,'.*')}.png"
+    Commandline.plot
+    Commandline.upload
   end
 
   private
 
+  def self.plot
+    puts "Plotting..."
+    GnuPlotPlotter.plot(Commandline.dstat_file, Commandline.image_file)
+  end
+
   def self.upload
-    output = `imgurr upload #{@@image_file}`
-    puts "#{output.split(" ")[1]}"
+    puts "Uploading..."
+    Imgur.upload(@@image_file)
+  end
+
+  def self.kill(pid)
+    if pid > 0
+      Process.kill "QUIT", pid
+    end
+
+    plot
+    upload
+    exit(0)
   end
 end
-
