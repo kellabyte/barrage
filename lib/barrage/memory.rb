@@ -1,5 +1,5 @@
 require "gnuplot"
-require_relative 'dstat_parser'
+require_relative 'dstat'
 
 class Memory
   def self.perform(file, plot)
@@ -7,7 +7,7 @@ class Memory
     plot.xlabel "time"
     plot.ylabel "memory (megabytes)"
 
-    parsed = DstatParser.parse(file, 7)
+    parsed = Dstat.parse(file, 7)
     plot.data << Gnuplot::DataSet.new( [parsed[0], parsed[1]] ) do |ds|
       ds.title = "used"
       ds.with = "filledcurve linetype 7"
@@ -15,7 +15,7 @@ class Memory
       ds.using = "1:(\$2 / 1024**2)"
     end
 
-    parsed = DstatParser.parse(file, 8)
+    parsed = Dstat.parse(file, 8)
     plot.data << Gnuplot::DataSet.new( [parsed[0], parsed[1]] ) do |ds|
       ds.title = "buffered"
       ds.with = "filledcurve linetype 3"
@@ -23,7 +23,7 @@ class Memory
       ds.using = "1:(\$2 / 1024**2)"
     end
 
-    parsed = DstatParser.parse(file, 9)
+    parsed = Dstat.parse(file, 9)
     plot.data << Gnuplot::DataSet.new( [parsed[0], parsed[1]] ) do |ds|
       ds.title = "cached"
       ds.with = "filledcurve linetype 5"

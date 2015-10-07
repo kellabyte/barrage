@@ -1,5 +1,6 @@
 require "thor"
 require_relative "commandline"
+require_relative "gnuplot_plotter"
 require_relative "cpu"
 require_relative "memory"
 require_relative "network"
@@ -25,9 +26,10 @@ module Barrage
       end
 
       puts "Plotting..."
-      Commandline.plot(Commandline.dstat_file)
+      GnuPlotPlotter.plot(Commandline.dstat_file, Commandline.image_file)
       Commandline.upload
       exit(0)
     end
   end
 end
+
