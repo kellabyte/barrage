@@ -10,8 +10,8 @@ class Dstat
   end
 
   def self.parse(file, column)
-    time = Array.new
-    values = Array.new
+    time = []
+    values = []
 
     start_parsing = false
     count = 0
