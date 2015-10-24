@@ -13,9 +13,8 @@ module Barrage
       if argv.size > 0 && argv.first != "--help"
         Dir.mkdir 'output' unless Dir.exist?('output')
 
-        $stdin.read
+        $stdin.read unless argv.first == "plot"
       end
     end
   end
 end
-
