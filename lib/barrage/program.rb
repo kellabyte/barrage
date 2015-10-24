@@ -10,10 +10,10 @@ module Barrage
     def self.run(argv)
       Commandline.start(argv)
 
-      if argv.size > 0 && argv[0] != "--help"
-        if !Dir.exist?('output')
-          Dir.mkdir 'output'
-        end
+      if argv.size > 0 && argv.first != "--help"
+        Dir.mkdir 'output' unless Dir.exist?('output')
+
+        $stdin.read
       end
     end
   end
