@@ -1,0 +1,13 @@
+# Server
+server_user: user
+server_sudo: no
+server_ip: "{{ hostvars[groups['server'][0]].inventory_hostname }}"
+server_files_destination: ~/barrage_benchmark
+server_port: 8000
+server_threads: 8
+
+# Client
+client_user: user
+client_sudo: no
+client_files_destination: ~/barrage_benchmark
+client_duration: 60s

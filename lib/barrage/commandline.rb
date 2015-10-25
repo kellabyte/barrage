@@ -44,6 +44,14 @@ class Commandline < Thor
     Commandline.upload
   end
 
+  desc "benchmark [PLAYBOOK PATH]", "Playbook benchmark to run"
+  def benchmark(path)
+    inventory_file = File.join(path, "hosts")
+    playbook_file = File.join(path, "playbook.yaml")
+    output = `ansible-playbook -k -v -i #{inventory_file} #{playbook_file}`
+    puts output
+  end
+
   private
 
   def self.plot
@@ -66,4 +74,3 @@ class Commandline < Thor
     exit(0)
   end
 end
-

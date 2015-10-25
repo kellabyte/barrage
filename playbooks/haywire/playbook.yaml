@@ -1,0 +1,54 @@
+- hosts: server
+  vars_files:
+    - config.yaml
+
+  user: "{{ server_user }}"
+  sudo: "{{ server_sudo }}"
+  gather_facts: no
+
+  tasks:
+    - name: Clone Barrage
+      git: repo=git://github.com/kellabyte/barrage.git
+           dest={{ server_files_destination }}/barrage
+    - name: Install Barrage
+      command: chdir={{ server_files_destination }}/barrage bundle install
+    - name: Clone Haywire
+      git: repo=git://github.com/kellabyte/haywire.git
+           dest={{ server_files_destination }}/haywire
+    - name: Compile Haywire dependencies
+      command: chdir={{ server_files_destination }}/haywire ./compile_dependencies.sh
+    - name: Compile Haywire
+      command: chdir={{ server_files_destination }}/haywire ./compile_make.sh
+    - name: Run Haywire
+      command: chdir={{ server_files_destination }}/haywire ./build/hello_world --port {{ server_port }} --threads {{ server_threads }} &
+      async: 31536000
+      poll: 0
+
+- hosts: client
+  vars_files:
+    - config.yaml
+
+  user: "{{ client_user }}"
+  sudo: "{{ client_sudo }}"
+  gather_facts: no
+
+  tasks:
+    - name: Clone Haywire
+      git: repo=git://github.com/kellabyte/haywire.git
+           dest={{ client_files_destination }}/haywire
+    - name: Compile Haywire dependencies
+      command: chdir={{ client_files_destination }}/haywire ./compile_dependencies.sh
+    - name: Run Wrk benchmark
+      command: chdir={{ client_files_destination }}/haywire/benchmark ../bin/wrk/wrk --script ./pipelined_get.lua --latency -d {{ client_duration }} -t 8 -c 32 http://{{ server_ip }}:{{ server_port }} -- 64
+
+- hosts: server
+  vars_files:
+    - config.yaml
+
+  user: "{{ server_user }}"
+  sudo: "{{ server_sudo }}"
+  gather_facts: no
+
+  tasks:
+    - name: Kill Haywire
+      command: killall hello_world
