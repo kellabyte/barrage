@@ -29,6 +29,7 @@ class Commandline < Thor
     @@unique_id = "#{Time.now.getutc.to_i}"
     @@dstat_file = "output/stats_#{@@unique_id}.csv"
     @@image_file = "output/results_#{@@unique_id}.png"
+    Dir.mkdir("output") unless File.exists?("output")
 
     @@dstat_pid = Dstat.run(@@dstat_file)
     puts "\nPress CTRL-C to exit\n\n"
