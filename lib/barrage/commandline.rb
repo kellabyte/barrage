@@ -34,6 +34,7 @@ class Commandline < Thor
     @@dstat_pid = Dstat.run(@@dstat_file)
     puts "\nPress CTRL-C to exit\n\n"
     trap("INT") { Commandline.kill(@@dstat_pid) }
+    Signal.trap("TERM") { Commandline.kill(@@dstat_pid) }
     $stdin.read
   end
 
