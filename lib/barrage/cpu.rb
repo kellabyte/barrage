@@ -4,7 +4,7 @@ require_relative 'dstat'
 class CPU
   def self.perform(file, plot)
     plot.title  "CPU Usage"
-    plot.xlabel "time"
+    plot.xlabel "time (seconds)"
     plot.ylabel "percent"
     #plot.yrange "[0:100]"
     plot.pointsize "0.5"

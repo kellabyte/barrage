@@ -4,7 +4,7 @@ require_relative 'dstat'
 class Network
   def self.perform(file, plot)
     plot.title  "Network throughput"
-    plot.xlabel "time"
+    plot.xlabel "time (seconds)"
     plot.ylabel "throughput (mbps)"
 
     parsed = Dstat.parse(file, 16)

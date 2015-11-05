@@ -23,6 +23,13 @@
       command: chdir={{ server_files_destination }}/haywire ./build/hello_world --port {{ server_port }} --threads {{ server_threads }} &
       async: 31536000
       poll: 0
+    - name: Create a unique ID
+      shell: echo "`date +"%Y%m%d%H%M%S"`-$(cat /dev/urandom | tr -cd [:alpha:] | tr '[:upper:]' '[:lower:]' | head -c 4)"
+      register: unique_id
+    - name: Creates output directory
+      file: path={{ server_files_destination }}/barrage/output/ state=directory
+    - name: Run Barrage capture
+      shell: dstat -tcmrd --disk-util -ny --output {{ server_files_destination }}/barrage/output/{{ unique_id.stdout }}.csv >/dev/null 2>&1 &
 
 - hosts: client
   vars_files:
@@ -38,7 +45,11 @@
            dest={{ client_files_destination }}/haywire
     - name: Compile Haywire dependencies
       command: chdir={{ client_files_destination }}/haywire ./compile_dependencies.sh
+    - pause: seconds=10
     - name: Run Wrk benchmark
+      command: chdir={{ client_files_destination }}/haywire/benchmark ../bin/wrk/wrk --latency -d {{ client_duration }} -t 8 -c 256 http://{{ server_ip }}:{{ server_port }}
+    - pause: seconds=10
+    - name: Run Wrk pipelining benchmark
       command: chdir={{ client_files_destination }}/haywire/benchmark ../bin/wrk/wrk --script ./pipelined_get.lua --latency -d {{ client_duration }} -t 8 -c 32 http://{{ server_ip }}:{{ server_port }} -- 64
 
 - hosts: server
@@ -50,5 +61,10 @@
   gather_facts: no
 
   tasks:
+    - pause: seconds=10
+    - name: Kill dstat
+      command: pkill -f dstat
     - name: Kill Haywire
       command: killall hello_world
+    - name: Run Barrage plot
+      shell: chdir={{ server_files_destination }}/barrage bundle exec bin/barrage plot output/{{ unique_id.stdout }}.csv

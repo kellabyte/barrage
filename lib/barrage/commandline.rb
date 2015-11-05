@@ -29,10 +29,12 @@ class Commandline < Thor
     @@unique_id = "#{Time.now.getutc.to_i}"
     @@dstat_file = "output/stats_#{@@unique_id}.csv"
     @@image_file = "output/results_#{@@unique_id}.png"
+    Dir.mkdir("output") unless File.exists?("output")
 
     @@dstat_pid = Dstat.run(@@dstat_file)
     puts "\nPress CTRL-C to exit\n\n"
     trap("INT") { Commandline.kill(@@dstat_pid) }
+    Signal.trap("TERM") { Commandline.kill(@@dstat_pid) }
     $stdin.read
   end
 
@@ -48,7 +50,7 @@ class Commandline < Thor
   def benchmark(path)
     inventory_file = File.join(path, "hosts")
     playbook_file = File.join(path, "playbook.yaml")
-    output = `ansible-playbook -k -v -i #{inventory_file} #{playbook_file}`
+    output = `ansible-playbook -vvvv -k -i #{inventory_file} #{playbook_file}`
     puts output
   end
 

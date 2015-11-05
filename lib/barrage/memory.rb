@@ -4,7 +4,7 @@ require_relative 'dstat'
 class Memory
   def self.perform(file, plot)
     plot.title  "Memory Usage"
-    plot.xlabel "time"
+    plot.xlabel "time (seconds)"
     plot.ylabel "memory (megabytes)"
 
     parsed = Dstat.parse(file, 7)
