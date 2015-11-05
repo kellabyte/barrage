@@ -16,9 +16,12 @@ There are 3 system roles in Barrage.
 My initial thought is Barrage will have an agent and orchestrator mode. Once the benchmark run is complete it will post the benchmark details to a Gist on GitHub including the graphs.
 
 # Prerequisites
-- **Orchestrator**
-  Ansible
-- **Server**
+- **Orchestrator**    
+  Ubuntu `subo apt-get install ansible`    
+  Mac `brew install ansible`
+
+- **Server**    
+  Ubuntu
   ```
   sudo apt-get install dstat gnuplot xclip
   gem install bundler
