@@ -2,6 +2,14 @@ require "gnuplot"
 require "csv"
 
 class GnuPlotPlotter
+  def self.percentile(values, percentile)
+    values_sorted = values.sort
+    k = (percentile*(values_sorted.length-1)+1).floor - 1
+    f = (percentile*(values_sorted.length-1)+1).modulo(1)
+
+    return values_sorted[k] + (f * (values_sorted[k+1] - values_sorted[k]))
+  end
+  
   def self.template(plot)
     plot.multiplot "layout 2,2"
     plot.object '1 rectangle from screen 0,0 to screen 3,3 fillcolor rgb"black" behind'
