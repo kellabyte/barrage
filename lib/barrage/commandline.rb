@@ -1,3 +1,4 @@
+require "erubis"
 require "thor"
 require "imgurr"
 require_relative "dstat"
@@ -50,8 +51,22 @@ class Commandline < Thor
   def benchmark(path)
     inventory_file = File.join(path, "hosts")
     playbook_file = File.join(path, "playbook.yaml")
-    output = `ansible-playbook -vvvv -k -i #{inventory_file} #{playbook_file}`
-    puts output
+    unique_id = "#{Time.now.getutc.to_i}"
+
+    output = ""
+    IO.popen("ansible-playbook -vvvv -k -i #{inventory_file} #{playbook_file}") do |io|
+      while (line = io.gets) do
+        output.concat(line)
+      end
+    end
+
+    locals = { output:output }
+    input = File.read("#{path}/template.erb")
+    result = Erubis::Eruby.new(input).result(locals)
+    puts result
+
+    Dir.mkdir("#{path}/results/") unless File.exists?("#{path}/results/")
+    File.write("#{path}/results/#{unique_id}.md", result)
   end
 
   private

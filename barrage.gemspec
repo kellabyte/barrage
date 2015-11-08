@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'gnuplot'
   spec.add_runtime_dependency 'imgurr'
+  spec.add_runtime_dependency 'erubis'
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
