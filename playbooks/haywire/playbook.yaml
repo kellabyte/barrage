@@ -8,12 +8,12 @@
 
   tasks:
     - name: Clone Barrage
-      git: repo=git://github.com/kellabyte/barrage.git
+      git: repo=https://github.com/kellabyte/barrage.git
            dest={{ server_files_destination }}/barrage
     - name: Install Barrage
       command: chdir={{ server_files_destination }}/barrage bundle install
     - name: Clone Haywire
-      git: repo=git://github.com/kellabyte/haywire.git
+      git: repo=https://github.com/kellabyte/haywire.git
            dest={{ server_files_destination }}/haywire
     - name: Compile Haywire dependencies
       command: chdir={{ server_files_destination }}/haywire ./compile_dependencies.sh
@@ -41,7 +41,7 @@
 
   tasks:
     - name: Clone Haywire
-      git: repo=git://github.com/kellabyte/haywire.git
+      git: repo=https://github.com/kellabyte/haywire.git
            dest={{ client_files_destination }}/haywire
     - name: Compile Haywire dependencies
       command: chdir={{ client_files_destination }}/haywire ./compile_dependencies.sh
