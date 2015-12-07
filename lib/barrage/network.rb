@@ -8,7 +8,7 @@ class Network
     plot.ylabel "throughput (mbps)"
 
     parsed = Dstat.parse(file, 16)
-    plot.data << Gnuplot::DataSet.new( [parsed[0], parsed[1]] ) do |ds|
+    plot.data << Gnuplot::DataSet.new(parsed) do |ds|
       ds.title = "received"
       ds.with = "filledcurve linetype 7"
       ds.linewidth = 2
@@ -16,7 +16,7 @@ class Network
     end
 
     parsed = Dstat.parse(file, 17)
-    plot.data << Gnuplot::DataSet.new( [parsed[0], parsed[1]] ) do |ds|
+    plot.data << Gnuplot::DataSet.new(parsed) do |ds|
       ds.title = "sent"
       ds.with = "filledcurve linetype 3"
       ds.linewidth = 2
